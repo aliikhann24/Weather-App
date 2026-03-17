@@ -1,0 +1,2 @@
+Vercel Live link: https://weather-app-ashy-ten-36.vercel.app
+Github Live link: https://github.com/aliikhann24/Weather-App
