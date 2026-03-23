@@ -16,7 +16,7 @@
   --muted:rgba(238,242,255,0.45);
   --accent:#38bdf8;
   --accent2:#818cf8;
-  --green:#34d399;
+  --green:#0b8357;
   --orange:#fb923c;
   --red:#f87171;
   --card:rgba(255,255,255,0.04);
@@ -27,7 +27,7 @@
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 
-/* ── BG ── */
+/* BG */
 .bg-blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
 .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:0.14;animation:blobMove 14s ease-in-out infinite;}
 .b1{width:560px;height:560px;background:#38bdf8;top:-140px;left:-140px;}
@@ -36,7 +36,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 @keyframes blobMove{0%,100%{transform:translate(0,0)scale(1);}40%{transform:translate(25px,-25px)scale(1.06);}70%{transform:translate(-20px,20px)scale(0.94);}}
 body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:0.5;}
 
-/* ── NAV ── */
+/* NAV */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   height:var(--nav-h);
@@ -67,7 +67,7 @@ nav{
 .nav-right{margin-left:auto;flex-shrink:0;}
 .nav-time{color:var(--muted);font-size:13px;font-family:'Syne',sans-serif;}
 
-/* ── PAGES ── */
+/* PAGES — key fix: always enough top padding */
 .page{
   display:none;
   position:relative;z-index:2;
@@ -79,85 +79,65 @@ nav{
 }
 .page.active{display:block;}
 
-/* ═══════════════════════════════════════
-   SEARCH BAR — ALWAYS VISIBLE, NEVER HIDDEN
-   Key: no opacity:0, no animation, no transform
-═══════════════════════════════════════ */
+/* SEARCH — ALWAYS VISIBLE */
 .search-wrap{
   width:100%;
-  margin-bottom:24px;
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
+  margin-bottom:28px;
+  /* NO opacity:0, NO animation — always visible */
 }
 .search-bar{
-  display:flex;
-  align-items:center;
+  display:flex;align-items:center;
   background:rgba(255,255,255,0.06);
-  border:1.5px solid var(--border);
+  border:1px solid var(--border);
   border-radius:50px;
   padding:6px 6px 6px 20px;
   gap:8px;
   backdrop-filter:blur(20px);
   transition:border-color 0.3s,box-shadow 0.3s;
   width:100%;
-  min-width:0;
 }
 .search-bar:focus-within{
-  border-color:rgba(56,189,248,0.5);
-  box-shadow:0 0 0 4px rgba(56,189,248,0.08);
+  border-color:rgba(56,189,248,0.4);
+  box-shadow:0 0 0 4px rgba(56,189,248,0.07);
 }
-.search-icon{
-  font-size:16px;
-  color:var(--muted);
-  flex-shrink:0;
-  line-height:1;
-}
+.search-icon{font-size:16px;color:var(--muted);flex-shrink:0;}
 .search-bar input{
-  flex:1;
-  min-width:0;
-  background:transparent;
-  border:none;outline:none;
-  color:var(--text);
-  font-family:'DM Sans',sans-serif;
-  font-size:15px;
+  flex:1;min-width:0;
+  background:transparent;border:none;outline:none;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;
 }
 .search-bar input::placeholder{color:var(--muted);}
 .locate-btn{
-  background:var(--surface-hover);
-  border:1px solid var(--border);
-  border-radius:40px;
-  padding:10px 14px;
-  color:var(--muted);font-size:18px;
+  background:var(--surface-hover);border:1px solid var(--border);
+  border-radius:40px;padding:10px 14px;
+  color:var(--muted);font-size:17px;
   cursor:pointer;transition:all 0.2s;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
-  line-height:1;
 }
 .locate-btn:hover{color:var(--accent);background:rgba(56,189,248,0.1);}
 .search-btn{
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   border:none;border-radius:40px;
-  padding:11px 24px;
-  color:#fff;
-  font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
+  padding:10px 22px;
+  color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
   cursor:pointer;transition:opacity 0.2s,transform 0.2s;
   white-space:nowrap;flex-shrink:0;
 }
 .search-btn:hover{opacity:0.85;transform:scale(0.97);}
 
-/* ── STATUS ── */
+/* STATUS */
 .status-msg{text-align:center;padding:20px;color:var(--muted);font-size:15px;display:none;}
 .status-msg.visible{display:block;}
 .error-msg{color:#f87171;}
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(56,189,248,0.2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:8px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ── WEATHER MAIN ── */
+/* WEATHER MAIN */
 .weather-main{display:none;opacity:0;transform:translateY(20px);transition:opacity 0.5s,transform 0.5s;}
 .weather-main.visible{display:block;opacity:1;transform:translateY(0);}
 
-/* ── HERO CARD ── */
+/* HERO CARD */
 .hero-card{
   background:var(--card);border:1px solid var(--border);
   border-radius:var(--radius);padding:32px 36px;
@@ -182,13 +162,13 @@ nav{
 .w-desc{font-family:'Syne',sans-serif;font-size:16px;font-weight:600;text-transform:capitalize;text-align:right;}
 .feels,.minmax{color:var(--muted);font-size:13px;text-align:right;}
 
-/* ── SUMMARY ── */
+/* SUMMARY */
 .weather-summary{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:12px;backdrop-filter:blur(20px);}
 .summary-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:8px;}
 .summary-text{color:rgba(238,242,255,0.75);font-size:14px;line-height:1.75;font-weight:300;}
 .summary-text strong{color:var(--text);font-weight:500;}
 
-/* ── STATS ── */
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 16px;backdrop-filter:blur(20px);transition:background 0.2s,transform 0.2s;}
 .stat-card:hover{background:var(--surface-hover);transform:translateY(-2px);}
@@ -197,7 +177,7 @@ nav{
 .stat-value{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
 .stat-sub{color:var(--muted);font-size:11px;margin-top:2px;}
 
-/* ── SUN ── */
+/* SUN */
 .sun-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
 .sun-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;backdrop-filter:blur(20px);display:flex;align-items:center;gap:12px;transition:background 0.2s;}
 .sun-card:hover{background:var(--surface-hover);}
@@ -205,7 +185,7 @@ nav{
 .sun-label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
 .sun-time{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
 
-/* ── BARS ── */
+/* BARS */
 .bar-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
 .bar-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;backdrop-filter:blur(20px);}
 .bar-label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
@@ -214,7 +194,7 @@ nav{
 .prog-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 1.2s ease;}
 .bar-desc{color:var(--muted);font-size:12px;margin-top:8px;}
 
-/* ── AQI ── */
+/* AQI */
 .aqi-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:12px;backdrop-filter:blur(20px);}
 .aqi-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px;flex-wrap:wrap;}
 .aqi-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
@@ -224,13 +204,13 @@ nav{
 .aqi-poor{background:rgba(248,113,113,0.15);color:var(--red);}
 .aqi-text{color:rgba(238,242,255,0.7);font-size:14px;line-height:1.65;font-weight:300;}
 
-/* ── WEAR ── */
+/* WEAR */
 .wear-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:12px;backdrop-filter:blur(20px);}
 .wear-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:12px;}
 .wear-items{display:flex;flex-wrap:wrap;gap:8px;}
 .wear-tag{background:rgba(129,140,248,0.1);border:1px solid rgba(129,140,248,0.2);border-radius:30px;padding:6px 14px;font-size:13px;color:var(--text);}
 
-/* ── FORECAST ── */
+/* FORECAST PAGE */
 .page-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;}
 .page-subtitle{color:var(--muted);font-size:14px;margin-bottom:24px;}
 .section-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;}
@@ -253,19 +233,25 @@ nav{
 .fc-temp-l{color:var(--muted);font-size:12px;margin-top:2px;}
 .fc-desc{color:var(--muted);font-size:10px;margin-top:4px;text-transform:capitalize;}
 
-/* ── ABOUT ── */
-.about-hero{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px;margin-bottom:12px;backdrop-filter:blur(20px);position:relative;overflow:hidden;width:100%;}
+/* ABOUT PAGE */
+.about-hero{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:36px;margin-bottom:12px;backdrop-filter:blur(20px);
+  position:relative;overflow:hidden;width:100%;
+}
 .about-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(56,189,248,0.12),transparent 70%);pointer-events:none;}
 .about-hero-icon{font-size:42px;margin-bottom:14px;}
 .about-hero h1{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:10px;line-height:1.2;}
 .about-hero p{color:rgba(238,242,255,0.72);font-size:14px;line-height:1.75;max-width:100%;}
 .about-logo{width:100%;max-width:420px;border-radius:14px;margin-top:20px;display:block;height:auto;}
+
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
 .feat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;backdrop-filter:blur(20px);transition:background 0.2s,transform 0.2s;}
 .feat-card:hover{background:var(--surface-hover);transform:translateY(-2px);}
 .feat-icon{font-size:24px;margin-bottom:10px;}
 .feat-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px;}
 .feat-desc{color:rgba(238,242,255,0.6);font-size:12px;line-height:1.6;}
+
 .tips-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px;backdrop-filter:blur(20px);margin-bottom:12px;}
 .tips-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:16px;}
 .tip-item{display:flex;gap:12px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);}
@@ -273,124 +259,74 @@ nav{
 .tip-num{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:rgba(56,189,248,0.18);line-height:1;flex-shrink:0;width:30px;}
 .tip-content h4{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:5px;}
 .tip-content p{color:rgba(238,242,255,0.62);font-size:13px;line-height:1.6;}
+
 .tech-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px;backdrop-filter:blur(20px);}
 .tech-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin-bottom:14px;}
 .tech-tags{display:flex;flex-wrap:wrap;gap:8px;}
 .tech-tag{background:rgba(129,140,248,0.1);border:1px solid rgba(129,140,248,0.2);border-radius:8px;padding:6px 14px;font-size:12px;font-family:'Syne',sans-serif;font-weight:600;}
 
-/* ── FOOTER ── */
+/* FOOTER */
 .footer{text-align:center;margin-top:40px;color:var(--muted);font-size:12px;}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
 .fade-in{opacity:0;transform:translateY(16px);animation:fadeUp 0.5s ease forwards;}
 
-/* ═══════════════════════════════
-   LARGE DESKTOP — 1200px+
-   Wide screens: more breathing room
-═══════════════════════════════ */
-@media(min-width:1200px){
-  .page{max-width:1100px;}
-  .stats-grid{grid-template-columns:repeat(6,1fr);}
-  .forecast-grid{grid-template-columns:repeat(5,1fr);}
-  .features-grid{grid-template-columns:repeat(3,1fr);}
-}
-
-/* ═══════════════════════════════
-   LAPTOP — max 1100px
-═══════════════════════════════ */
-@media(max-width:1100px){
-  .page{max-width:100%;padding-left:28px;padding-right:28px;}
-  .temp-num{font-size:82px;}
-}
-
-/* ═══════════════════════════════
-   LAPTOP SMALL — max 900px
-═══════════════════════════════ */
+/* ═══════════════════════════
+   TABLET — max 900px
+═══════════════════════════ */
 @media(max-width:900px){
   .page{padding-left:20px;padding-right:20px;}
   .features-grid{grid-template-columns:repeat(2,1fr);}
-  .temp-num{font-size:76px;}
-  .w-icon{font-size:68px;}
+  .temp-num{font-size:80px;}
 }
 
-/* ═══════════════════════════════
-   TABLET — max 768px
-═══════════════════════════════ */
+/* ═══════════════════════════
+   TABLET SMALL — max 768px
+═══════════════════════════ */
 @media(max-width:768px){
   :root{--nav-h:60px;}
-  nav{padding:0 16px;gap:6px;}
+  nav{padding:0 18px;}
   .nav-logo{font-size:19px;margin-right:4px;}
-  .nav-link{padding:7px 11px;font-size:13px;}
+  .nav-link{padding:7px 12px;font-size:13px;}
   .nav-time{display:none;}
   .page{padding-top:calc(var(--nav-h)+24px);padding-left:16px;padding-right:16px;padding-bottom:60px;}
   .hero-card{padding:26px 20px;}
-  .temp-num{font-size:70px;}
-  .w-icon{font-size:60px;}
+  .temp-num{font-size:74px;}
+  .w-icon{font-size:62px;}
   .stats-grid{grid-template-columns:repeat(3,1fr);}
   .forecast-grid{grid-template-columns:repeat(5,1fr);}
   .about-hero{padding:26px 22px;}
   .about-hero h1{font-size:22px;}
   .features-grid{grid-template-columns:repeat(2,1fr);}
   .about-logo{max-width:100%;}
-
-  /* Search on tablet — comfortable */
-  .search-wrap{margin-bottom:18px;}
-  .search-bar{padding:6px 6px 6px 18px;gap:8px;}
-  .search-bar input{font-size:14px;}
-  .search-btn{padding:10px 20px;font-size:13px;}
-  .locate-btn{padding:10px 13px;}
 }
 
-/* ═══════════════════════════════
+/* ═══════════════════════════
    MOBILE — max 600px
-   Search bar fully adapted
-═══════════════════════════════ */
+═══════════════════════════ */
 @media(max-width:600px){
   :root{--nav-h:56px;}
-
-  /* Nav */
-  nav{padding:0 10px;gap:3px;}
+  nav{padding:0 10px;gap:4px;}
   .nav-logo{font-size:16px;margin-right:2px;}
   .nav-link{padding:6px 9px;font-size:11.5px;}
   .nav-time{display:none;}
 
-  /* Page spacing */
+  /* Page */
   .page{
-    padding-top:calc(var(--nav-h)+14px);
+    padding-top:calc(var(--nav-h)+16px);
     padding-left:10px;padding-right:10px;
     padding-bottom:48px;
   }
 
-  /* ── SEARCH BAR on mobile ──
-     Always visible, compact but functional */
-  .search-wrap{
-    margin-bottom:14px;
-    display:block !important;
-    opacity:1 !important;
-  }
-  .search-bar{
-    padding:5px 5px 5px 12px;
-    gap:5px;
-    border-radius:40px;
-  }
+  /* Search bar — ALWAYS visible on mobile */
+  .search-wrap{margin-bottom:14px;}
+  .search-bar{padding:5px 5px 5px 12px;gap:5px;}
   .search-icon{font-size:14px;}
-  .search-bar input{
-    font-size:13px;
-    min-width:0;
-    flex:1;
-  }
+  .search-bar input{font-size:13px;}
   .search-bar input::placeholder{font-size:12px;}
-  .locate-btn{
-    padding:8px 11px;
-    font-size:16px;
-    flex-shrink:0;
-  }
-  .search-btn{
-    padding:9px 13px;
-    font-size:11px;
-    flex-shrink:0;
-  }
+  .locate-btn{padding:9px 11px;font-size:15px;}
+  .search-btn{padding:9px 14px;font-size:11px;}
 
-  /* Hero card */
+  /* Hero */
   .hero-card{padding:16px 14px;margin-bottom:10px;}
   .temp-row{flex-direction:column;gap:12px;}
   .temp-left{gap:10px;align-items:center;}
@@ -405,7 +341,7 @@ nav{
   .weather-summary{padding:14px 12px;margin-bottom:10px;}
   .summary-text{font-size:13px;line-height:1.6;}
 
-  /* Stats — 2 cols */
+  /* Stats */
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px;}
   .stat-card{padding:14px 12px;}
   .stat-value{font-size:16px;}
@@ -461,24 +397,18 @@ nav{
   .footer{margin-top:28px;font-size:11px;}
 }
 
-/* ═══════════════════════════════
-   SMALL PHONE — max 400px
-═══════════════════════════════ */
-@media(max-width:400px){
+/* ═══════════════════════════
+   SMALL PHONE — max 380px
+═══════════════════════════ */
+@media(max-width:380px){
   :root{--nav-h:52px;}
   nav{padding:0 8px;gap:2px;}
   .nav-logo{font-size:14px;}
-  .nav-link{padding:5px 7px;font-size:10.5px;}
-  .page{
-    padding-top:calc(var(--nav-h)+10px);
-    padding-left:8px;padding-right:8px;
-  }
-  /* Search on very small phones */
+  .nav-link{padding:5px 7px;font-size:11px;}
+  .page{padding-top:calc(var(--nav-h)+12px);padding-left:8px;padding-right:8px;}
   .search-bar{padding:4px 4px 4px 10px;gap:4px;}
-  .search-icon{display:none;} /* hide icon to save space */
-  .search-bar input{font-size:12px;}
   .search-btn{padding:8px 10px;font-size:10px;}
-  .locate-btn{padding:8px 9px;font-size:15px;}
+  .locate-btn{padding:8px 9px;}
   .temp-num{font-size:56px;}
   .w-icon{font-size:44px;}
   .stats-grid{grid-template-columns:repeat(2,1fr);}
@@ -508,15 +438,15 @@ nav{
   </div>
 </nav>
 
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div class="page active" id="page-home">
 
-  <!-- SEARCH: completely outside weather-main, can NEVER be hidden by JS -->
+  <!-- SEARCH — outside weather-main so it NEVER gets hidden -->
   <div class="search-wrap">
     <div class="search-bar">
       <span class="search-icon">🔍</span>
-      <input type="text" id="cityInput" placeholder="Search any city — London, Tokyo, Karachi..."/>
-      <button class="locate-btn" id="locateBtn" title="Detect my location">📍</button>
+      <input type="text" id="cityInput" placeholder="Search city — London, Dubai, Karachi..."/>
+      <button class="locate-btn" id="locateBtn" title="Use my location">📍</button>
       <button class="search-btn" id="searchBtn">Search</button>
     </div>
   </div>
@@ -600,7 +530,7 @@ nav{
   <div class="footer">Built with ❤️ · Powered by OpenWeatherMap · Muhammad Ali's Portfolio</div>
 </div>
 
-<!-- ══ FORECAST ══ -->
+<!-- FORECAST -->
 <div class="page" id="page-forecast">
   <div class="page-title">5-Day Forecast</div>
   <div class="page-subtitle" id="forecastSubtitle">Search a city on the Home page first.</div>
@@ -617,7 +547,7 @@ nav{
   <div class="footer">Built with ❤️ · Powered by OpenWeatherMap · Muhammad Ali's Portfolio</div>
 </div>
 
-<!-- ══ ABOUT ══ -->
+<!-- ABOUT -->
 <div class="page" id="page-about">
   <div class="about-hero fade-in">
     <div class="about-hero-icon">🌤️</div>
@@ -710,13 +640,13 @@ function makeSummary(data){
   const comfort=hum>70?'humid and heavy':hum>50?'moderately humid':'dry and comfortable';
   const wind=ws<15?'a calm, gentle breeze':ws<35?'a moderate wind':'strong winds';
   const feel=t>35?'very hot':t>25?'warm and pleasant':t>15?'mild':t>5?'cool':'cold';
-  return`Currently in <strong>${city}</strong>, the sky shows <strong>${desc}</strong> with a temperature of <strong>${t}°C</strong> — making it a <strong>${feel}</strong> day. The air feels ${comfort} at <strong>${hum}% humidity</strong>, and there is ${wind} blowing at <strong>${ws} km/h</strong> from the <strong>${windDir(data.wind.deg||0)}</strong>. Pressure reads <strong>${data.main.pressure} hPa</strong> with <strong>${data.clouds.all}%</strong> cloud cover. Visibility approximately <strong>${vis}</strong>.`;
+  return`Currently in <strong>${city}</strong>, the sky shows <strong>${desc}</strong> with a temperature of <strong>${t}°C</strong> — making it a <strong>${feel}</strong> day. The air feels ${comfort} at <strong>${hum}% humidity</strong>, and there is ${wind} blowing at <strong>${ws} km/h</strong> from the <strong>${windDir(data.wind.deg||0)}</strong>. Pressure reads <strong>${data.main.pressure} hPa</strong> with <strong>${data.clouds.all}%</strong> cloud cover. Visibility is approximately <strong>${vis}</strong>.`;
 }
 
 function makeAQI(hum,ws,clouds){
   if(hum>75&&ws<10){document.getElementById('aqiBadge').textContent='⚠️ Poor';document.getElementById('aqiBadge').className='aqi-badge aqi-poor';return`High humidity (${hum}%) with low wind creates stagnant air. Pollutants may build up. Those with asthma or respiratory conditions should limit outdoor activity today.`;}
-  else if(hum>55||ws>30){document.getElementById('aqiBadge').textContent='🌤 Moderate';document.getElementById('aqiBadge').className='aqi-badge aqi-moderate';return`Air conditions are moderate. Humidity at ${hum}% may cause mild discomfort during physical activity. Wind at ${ws} km/h is helping disperse pollutants. Stay hydrated outdoors.`;}
-  else{document.getElementById('aqiBadge').textContent='✅ Good';document.getElementById('aqiBadge').className='aqi-badge aqi-good';return`Air conditions are good today! Humidity at ${hum}% is comfortable and winds are keeping the air fresh. Great day for outdoor activities!`;}
+  else if(hum>55||ws>30){document.getElementById('aqiBadge').textContent='🌤 Moderate';document.getElementById('aqiBadge').className='aqi-badge aqi-moderate';return`Air conditions are moderate. Humidity at ${hum}% may cause mild discomfort during physical activity. Wind at ${ws} km/h is helping disperse pollutants. Stay hydrated and take breaks when exercising outdoors.`;}
+  else{document.getElementById('aqiBadge').textContent='✅ Good';document.getElementById('aqiBadge').className='aqi-badge aqi-good';return`Air conditions are good today! Humidity at ${hum}% is comfortable, and winds are keeping the air fresh. Great day for outdoor activities!`;}
 }
 
 function makeWear(t,hum,ws){
@@ -741,8 +671,7 @@ function renderWeather(data){
   document.getElementById('weatherDate').textContent=`${days[lt.getUTCDay()]}, ${lt.getUTCDate()} ${months[lt.getUTCMonth()]} ${lt.getUTCFullYear()} · Local time`;
   document.getElementById('weatherIcon').textContent=getEmoji(data.weather[0].id,data.weather[0].icon);
   document.getElementById('weatherDesc').textContent=data.weather[0].description;
-  currentTempC=data.main.temp-273.15;currentFeelsC=data.main.feels_like-273.15;
-  currentMinC=data.main.temp_min-273.15;currentMaxC=data.main.temp_max-273.15;
+  currentTempC=data.main.temp-273.15;currentFeelsC=data.main.feels_like-273.15;currentMinC=data.main.temp_min-273.15;currentMaxC=data.main.temp_max-273.15;
   displayTemp();
   document.getElementById('summaryText').innerHTML=makeSummary(data);
   const hum=data.main.humidity,ws=data.wind.speed*3.6;
@@ -779,7 +708,7 @@ async function fetchWeather(query){
     const data=await res.json();
     if(data.cod!==200)throw new Error(data.message||'City not found');
     lastCity=data.name;renderWeather(data);fetchForecast(query);
-  }catch(e){showStatus('❌ '+(e.message||'Something went wrong. Check your internet.'),true);}
+  }catch(e){showStatus('❌ '+(e.message||'Something went wrong'),true);}
 }
 
 async function fetchForecast(query){
@@ -805,32 +734,26 @@ function renderForecastPage(){
   list.forEach(item=>{
     const d=new Date((item.dt+tz)*1000),key=`${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`;
     if(!daysMap[key])daysMap[key]={temps:[],icons:[],descs:[],dayName:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getUTCDay()]};
-    daysMap[key].temps.push(item.main.temp-273.15);
-    daysMap[key].icons.push({id:item.weather[0].id,icon:item.weather[0].icon});
-    daysMap[key].descs.push(item.weather[0].description);
+    daysMap[key].temps.push(item.main.temp-273.15);daysMap[key].icons.push({id:item.weather[0].id,icon:item.weather[0].icon});daysMap[key].descs.push(item.weather[0].description);
   });
   document.getElementById('forecastGrid').innerHTML=Object.keys(daysMap).slice(0,5).map((key,i)=>{
-    const d=daysMap[key],hi=Math.round(Math.max(...d.temps)),lo=Math.round(Math.min(...d.temps));
-    const mid=d.icons[Math.floor(d.icons.length/2)],u=currentUnit==='C';
+    const d=daysMap[key],hi=Math.round(Math.max(...d.temps)),lo=Math.round(Math.min(...d.temps)),mid=d.icons[Math.floor(d.icons.length/2)],u=currentUnit==='C';
     return`<div class="fc-card${i===0?' today':''}"><div class="fc-day">${i===0?'Today':d.dayName}</div><div class="fc-icon">${getEmoji(mid.id,mid.icon)}</div><div class="fc-temp-h">${u?hi:toF(hi)}°</div><div class="fc-temp-l">${u?lo:toF(lo)}°</div><div class="fc-desc">${d.descs[0]}</div></div>`;
   }).join('');
-  const allT=list.map(i=>i.main.temp-273.15),avg=Math.round(allT.reduce((a,b)=>a+b,0)/allT.length);
-  const mx=Math.round(Math.max(...allT)),mn=Math.round(Math.min(...allT));
-  const rain=list.filter(i=>i.weather[0].id>=500&&i.weather[0].id<600).length;
+  const allT=list.map(i=>i.main.temp-273.15),avg=Math.round(allT.reduce((a,b)=>a+b,0)/allT.length),mx=Math.round(Math.max(...allT)),mn=Math.round(Math.min(...allT)),rain=list.filter(i=>i.weather[0].id>=500&&i.weather[0].id<600).length;
   document.getElementById('forecastAnalysis').innerHTML=`Over the next 5 days in <strong>${lastCity}</strong>, temperatures will range from <strong>${mn}°C</strong> to <strong>${mx}°C</strong>, averaging <strong>${avg}°C</strong>. ${rain>3?`<strong>${rain} rainy periods</strong> expected — keep an umbrella handy.`:rain>0?`A few rainy periods expected (${rain} slots) — carry an umbrella.`:'No significant rainfall expected — great conditions!'} Check back as forecasts can shift.`;
 }
 
 document.getElementById('searchBtn').addEventListener('click',()=>{
   const city=document.getElementById('cityInput').value.trim();
-  if(!city)return;
-  fetchWeather(`q=${encodeURIComponent(city)}`);
+  if(!city)return;fetchWeather(`q=${encodeURIComponent(city)}`);
 });
 document.getElementById('cityInput').addEventListener('keydown',e=>{
   if(e.key==='Enter')document.getElementById('searchBtn').click();
 });
 document.getElementById('locateBtn').addEventListener('click',()=>{
   if(!navigator.geolocation)return showStatus('Geolocation not supported.',true);
-  showStatus('<span class="spinner"></span> Detecting your location...');
+  showStatus('<span class="spinner"></span> Getting your location...');
   navigator.geolocation.getCurrentPosition(
     pos=>fetchWeather(`lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`),
     ()=>showStatus('❌ Location access denied. Please search manually.',true)
